@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SpriteDrawing</title>
+</head>
+<body>
+<div id="gameArea">
+    <canvas id="myCanvas" width="800" height="480"></canvas>
+</div>
+    <script>
+        //ideas: balloon appears on space press and moves up.
+        //therefore balloon and movement one object
+        //object created for each press, but only one object at at time
+        //for first version, will only shoot once while balloon on screen
+        //therefore need boolean flag for firing
+        // if space pressed and fired false then do it.
+            
+        "use strict";
+
+var Game = {
+    canvas : undefined,
+    canvasContext : undefined,
+    balloonSprite : undefined
+};
+        
+Game.input = document.addEventListener('keydown', function(event) {
+    const key = event.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+  console.log(key);
+});
+
+Game.start = function () {
+    Game.canvas = document.getElementById("myCanvas");
+    Game.canvasContext = Game.canvas.getContext("2d");
+    Game.balloonSprite = new Image();
+    Game.balloonSprite.src = "spr_balloon.png";
+    Game.x = 0;
+    window.setTimeout(Game.mainLoop, 500);
+};
+
+document.addEventListener( 'DOMContentLoaded', Game.start);
+
+Game.clearCanvas = function () {
+    Game.canvasContext.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
+};
+
+Game.drawImage = function (sprite, position) {
+    Game.canvasContext.save();
+    Game.canvasContext.drawImage(sprite, position.x , position.y);
+    Game.canvasContext.restore();
+};
+
+Game.mainLoop = function() {
+    Game.clearCanvas();
+    Game.update();
+    Game.draw();
+    if (Game.x <= 300) {
+        Game.x += 1;
+        console.log(Game.x);
+        window.setTimeout(Game.mainLoop, 1000 / 60);  
+    }
+};
+
+Game.update = function () {
+};
+
+Game.draw = function () {
+    Game.drawImage(Game.balloonSprite, { x : 400, y : 420});
+};
+            
+            
+            
+        </script>
+    </body>
